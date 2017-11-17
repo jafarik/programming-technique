@@ -3,6 +3,8 @@
 
 
 #include "ieventhandler.hh"
+#include "point.hh"
+
 namespace Student {
 class EventHandler: public Common::IEventHandler
 {
