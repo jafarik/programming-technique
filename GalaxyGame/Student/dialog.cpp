@@ -14,6 +14,7 @@ Dialog::Dialog(/*
 
 
     ui->setupUi(this);
+    this->setWindowState(Qt::WindowFullScreen);
     scene = new QGraphicsScene(this);
    // scene->setSceneRect(ui->graphicsView->geometry().x(), 0, ui->graphicsView->width()*2,
      //                   ui->graphicsView->height()*2);
@@ -27,23 +28,11 @@ Dialog::~Dialog()
 
 void Dialog::drawNewShip(Common::Point start_point)
 {
-    qDebug()<<"inside  the drawship";
-    srand(time(NULL));
 
-    //var = var*(-1^var);
-
-    for (int i = 0 ; i < 5 ; i++){
-        auto var = rand()%300;
-
-
-        CargoShipItem *newCargoShip = new CargoShipItem(start_point.x*20 + var,
-                                                        start_point.y*30 + var,
-                                                        10, 10);
-        //  QGraphicsEllipseItem *new_ship = new QGraphicsEllipseItem();
-        //new_ship->setRect(200,
-        //300, 70, 50);
-        scene->addItem(newCargoShip);
-    }
+    CargoShipItem *newCargoShip = new CargoShipItem(start_point.x*60 + 2,
+                                                    start_point.y*80 + 2,
+                                                    10, 10);
+    scene->addItem(newCargoShip);
 }
 
 void Dialog::setUiInfo(std::shared_ptr<Student::Galaxy> galaxy,
@@ -62,11 +51,35 @@ void Dialog::implementUi()
     for (auto it = star_system.begin() ; it != star_system.end() ; it++)
     {
         auto p = (*it)->getCoordinates();
-        StarSystemItem *new_star = new StarSystemItem(p.x*20, p.y*30, 30, 30);
+        StarSystemItem *new_star = new StarSystemItem(p.x*60,
+                                                      p.y*80,
+                                                      30, 30);
         scene->addItem(new_star);
     }
 
-    gameRunner_->spawnShips(700);
+    // add the cargo ships to the Galaxy::galaxy_ship vector.
+    gameRunner_->spawnShips(30);
+
+    // Move the galaxy ships.
+
+    QTimer *timer =new QTimer(this);
+
+    connect(timer, SIGNAL(timeout() ), this, SLOT(cargoShip_Update()) );
+
+    timer->setInterval(20);
 
 }
+
+void Dialog::moveCargoShips()
+{
+    QTimer *timer =new QTimer(this);
+    connect(timer, SIGNAL(timeout()), this, SLOT(cargoShip_Update() ) );
+}
+
+void Dialog::cargoShip_Update()
+{
+    gameRunner_->createActions();
+    gameRunner_->doActions();
+}
+
 

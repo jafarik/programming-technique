@@ -71,3 +71,16 @@ int Student::Statistics::getCreditBalance() const
     return credits_;
 
 }
+
+
+bool Student::Statistics::checkInvariant() const
+{
+
+    if (getPoints() < 0)
+        return false;
+
+    if (getCreditBalance() < Max_Loan_Allowance_)
+        return false;
+
+    return true;
+}

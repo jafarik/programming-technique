@@ -1,0 +1,19 @@
+// Qt-user
+
+*.pro.user
+.pro.user.
+Makefile*
+build-
+*.log
+build-release/
+build-debug/
+-build--Release/
+-build--Debug/
+
+
+// Qt unit tests
+target_wrapper.*
+
+// QtCreator
+*.autosave
+

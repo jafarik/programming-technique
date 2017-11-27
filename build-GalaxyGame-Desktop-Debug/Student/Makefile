@@ -56,7 +56,8 @@ SOURCES       = ../../GalaxyGame/Student/main.cc \
 		../../GalaxyGame/Student/starsystemitem.cpp \
 		../../GalaxyGame/Student/dialog.cpp \
 		../../GalaxyGame/Student/cargoshipitem.cpp \
-		../../GalaxyGame/Student/dialogtwo.cpp moc_mainwindow.cpp \
+		../../GalaxyGame/Student/dialogtwo.cpp qrc_resource.cpp \
+		moc_mainwindow.cpp \
 		moc_dialog.cpp \
 		moc_dialogtwo.cpp
 OBJECTS       = main.o \
@@ -68,6 +69,7 @@ OBJECTS       = main.o \
 		dialog.o \
 		cargoshipitem.o \
 		dialogtwo.o \
+		qrc_resource.o \
 		moc_mainwindow.o \
 		moc_dialog.o \
 		moc_dialogtwo.o
@@ -304,6 +306,7 @@ Makefile: ../../GalaxyGame/Student/Student.pro /home/kianoush/anaconda2/mkspecs/
 		/home/kianoush/anaconda2/mkspecs/features/yacc.prf \
 		/home/kianoush/anaconda2/mkspecs/features/lex.prf \
 		../../GalaxyGame/Student/Student.pro \
+		../../GalaxyGame/Student/resource.qrc \
 		/home/kianoush/anaconda2/lib/libQt5Widgets.prl \
 		/home/kianoush/anaconda2/lib/libQt5Gui.prl \
 		/home/kianoush/anaconda2/lib/libQt5Core.prl
@@ -411,6 +414,7 @@ Makefile: ../../GalaxyGame/Student/Student.pro /home/kianoush/anaconda2/mkspecs/
 /home/kianoush/anaconda2/mkspecs/features/yacc.prf:
 /home/kianoush/anaconda2/mkspecs/features/lex.prf:
 ../../GalaxyGame/Student/Student.pro:
+../../GalaxyGame/Student/resource.qrc:
 /home/kianoush/anaconda2/lib/libQt5Widgets.prl:
 /home/kianoush/anaconda2/lib/libQt5Gui.prl:
 /home/kianoush/anaconda2/lib/libQt5Core.prl:
@@ -428,6 +432,7 @@ dist: distdir FORCE
 distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
+	$(COPY_FILE) --parents ../../GalaxyGame/Student/resource.qrc $(DISTDIR)/
 	$(COPY_FILE) --parents ../../GalaxyGame/Student/galaxy.hh ../../GalaxyGame/Student/eventhandler.hh ../../GalaxyGame/Student/statistics.hh ../../GalaxyGame/Student/mainwindow.h ../../GalaxyGame/Student/starsystemitem.h ../../GalaxyGame/Student/dialog.h ../../GalaxyGame/Student/cargoshipitem.h ../../GalaxyGame/Student/dialogtwo.h $(DISTDIR)/
 	$(COPY_FILE) --parents ../../GalaxyGame/Student/main.cc ../../GalaxyGame/Student/galaxy.cc ../../GalaxyGame/Student/eventhandler.cc ../../GalaxyGame/Student/statistics.cc ../../GalaxyGame/Student/mainwindow.cpp ../../GalaxyGame/Student/starsystemitem.cpp ../../GalaxyGame/Student/dialog.cpp ../../GalaxyGame/Student/cargoshipitem.cpp ../../GalaxyGame/Student/dialogtwo.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents ../../GalaxyGame/Student/mainwindow.ui ../../GalaxyGame/Student/dialog.ui ../../GalaxyGame/Student/dialogtwo.ui $(DISTDIR)/
@@ -456,8 +461,13 @@ check: first
 
 benchmark: first
 
-compiler_rcc_make_all:
+compiler_rcc_make_all: qrc_resource.cpp
 compiler_rcc_clean:
+	-$(DEL_FILE) qrc_resource.cpp
+qrc_resource.cpp: ../../GalaxyGame/Student/resource.qrc \
+		../../GalaxyGame/Student/cargo.png
+	/home/kianoush/anaconda2/bin/rcc -name resource ../../GalaxyGame/Student/resource.qrc -o qrc_resource.cpp
+
 compiler_moc_header_make_all: moc_mainwindow.cpp moc_dialog.cpp moc_dialogtwo.cpp
 compiler_moc_header_clean:
 	-$(DEL_FILE) moc_mainwindow.cpp moc_dialog.cpp moc_dialogtwo.cpp
@@ -471,12 +481,9 @@ moc_mainwindow.cpp: ../../GalaxyGame/Student/galaxy.hh \
 		../../GalaxyGame/Course/ieventhandler.hh \
 		../../GalaxyGame/Course/initialize.hh \
 		../../GalaxyGame/Course/igamerunner.hh \
-		../../GalaxyGame/Student/eventhandler.hh \
 		../../GalaxyGame/Student/dialog.h \
 		../../GalaxyGame/Student/starsystemitem.h \
 		../../GalaxyGame/Student/cargoshipitem.h \
-		../../GalaxyGame/Student/mainwindow.h \
-		../../GalaxyGame/Student/dialogtwo.h \
 		../../GalaxyGame/Student/mainwindow.h
 	/home/kianoush/anaconda2/bin/moc $(DEFINES) -I/home/kianoush/anaconda2/mkspecs/linux-g++ -I/home/kianoush/TUT-term3/Programming_Techniques/project_work/template_project/GalaxyGame/Student -I/home/kianoush/TUT-term3/Programming_Techniques/project_work/template_project/GalaxyGame/Course -I/home/kianoush/anaconda2/include/qt -I/home/kianoush/anaconda2/include/qt/QtWidgets -I/home/kianoush/anaconda2/include/qt/QtGui -I/home/kianoush/anaconda2/include/qt/QtCore -I. -I/home/kianoush/anaconda2/lib/gcc/x86_64-unknown-linux-gnu/4.8.5/include -I/home/kianoush/anaconda2/lib/gcc/x86_64-unknown-linux-gnu/4.8.5/include-fixed -I/home/kianoush/anaconda2/gcc/include/c++ -I/home/kianoush/anaconda2/gcc/include/c++/x86_64-unknown-linux-gnu -I/home/kianoush/anaconda2/gcc/include/c++/backward -I/home/kianoush/anaconda2/include -I/usr/include ../../GalaxyGame/Student/mainwindow.h -o moc_mainwindow.cpp
 
@@ -530,7 +537,7 @@ compiler_yacc_impl_make_all:
 compiler_yacc_impl_clean:
 compiler_lex_make_all:
 compiler_lex_clean:
-compiler_clean: compiler_moc_header_clean compiler_uic_clean 
+compiler_clean: compiler_rcc_clean compiler_moc_header_clean compiler_uic_clean 
 
 ####### Compile
 
@@ -595,11 +602,9 @@ mainwindow.o: ../../GalaxyGame/Student/mainwindow.cpp ../../GalaxyGame/Student/m
 		../../GalaxyGame/Course/ieventhandler.hh \
 		../../GalaxyGame/Course/initialize.hh \
 		../../GalaxyGame/Course/igamerunner.hh \
-		../../GalaxyGame/Student/eventhandler.hh \
 		../../GalaxyGame/Student/dialog.h \
 		../../GalaxyGame/Student/starsystemitem.h \
 		../../GalaxyGame/Student/cargoshipitem.h \
-		../../GalaxyGame/Student/dialogtwo.h \
 		ui_mainwindow.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o ../../GalaxyGame/Student/mainwindow.cpp
 
@@ -640,6 +645,9 @@ dialogtwo.o: ../../GalaxyGame/Student/dialogtwo.cpp ../../GalaxyGame/Student/dia
 		../../GalaxyGame/Course/igamerunner.hh \
 		ui_dialogtwo.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o dialogtwo.o ../../GalaxyGame/Student/dialogtwo.cpp
+
+qrc_resource.o: qrc_resource.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o qrc_resource.o qrc_resource.cpp
 
 moc_mainwindow.o: moc_mainwindow.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_mainwindow.o moc_mainwindow.cpp

@@ -2,6 +2,7 @@
 #include <QtTest>
 #include <memory>
 #include <vector>
+#include "stateexception.hh"
 #include "statistics.hh"
 class StatisticsTest : public QObject
 {
@@ -106,6 +107,8 @@ void StatisticsTest::test_reducePoints()
     test_statistics_->reducePoints(20u);
     QCOMPARE(test_statistics_->getPoints(), num_points);
 
+    QVERIFY_EXCEPTION_THROWN(test_statistics_->reducePoints(30), Common::StateException);
+
 }
 
 void StatisticsTest::test_getCreditBalance()
@@ -128,6 +131,8 @@ void StatisticsTest::test_reducedCredits()
 
     test_statistics_->reduceCredits(10u);
     QCOMPARE(test_statistics_->getCreditBalance(), amount_credits-10);
+
+    QVERIFY_EXCEPTION_THROWN(test_statistics_->reduceCredits(20), Common::StateException);
 }
 
 

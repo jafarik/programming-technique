@@ -23,13 +23,26 @@ int main(int argc, char *argv[])
     Common::utilityInit(time(NULL));
 
     Dialog d;
-    handler->setDialog(&d);
+    MainWindow w;
 
     d.setUiInfo(galaxy, gameRunner);
-    d.implementUi();
+
+    handler->setDialog(&d);
+    w.setDialog(&d);
+
+    //d.implementUi();
+    //d.show();
+    w.show();
+
+
+
+    //w.show();
+
+    //d.implementUi();
     //gameRunner->spawnShips(3);
    // d.drawItem();
-    d.show();
+    //if (d.exec())
+     //   d.show();
 
     return a.exec();
 }

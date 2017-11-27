@@ -6,6 +6,9 @@
 #include <QGraphicsView>
 #include <QGraphicsItem>
 #include <QGraphicsRectItem>
+#include <QGraphicsPixmapItem>
+#include <QPixmap>
+#include <QPainter>
 #include "starsystemitem.h"
 #include "cargoshipitem.h"
 #include "initialize.hh"
@@ -17,6 +20,7 @@
 #include <time.h>
 #include <stdlib.h>
 #include "point.hh"
+#include <QTimer>
 
 
 
@@ -37,8 +41,12 @@ public:
 
     void setUiInfo(std::shared_ptr<Student::Galaxy> galaxy,
                    std::shared_ptr<Common::IGameRunner> gameRunner);
-
     void implementUi();
+    void moveCargoShips();
+
+public slots:
+
+    void cargoShip_Update();
 
 
 
@@ -48,7 +56,7 @@ private:
     Ui::Dialog *ui;
     QGraphicsScene *scene;
 
-    //std::shared_ptr<Common::IEventHandler> handler_;
+    std::shared_ptr<Common::IEventHandler> handler_;
     std::shared_ptr<Student::Galaxy> galaxy_;
     std::shared_ptr<Common::IGameRunner> gameRunner_;
 

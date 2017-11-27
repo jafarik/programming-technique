@@ -13,11 +13,9 @@
 #include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QButtonGroup>
-#include <QtWidgets/QGraphicsView>
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QMainWindow>
-#include <QtWidgets/QMenuBar>
-#include <QtWidgets/QStatusBar>
+#include <QtWidgets/QPushButton>
 #include <QtWidgets/QWidget>
 
 QT_BEGIN_NAMESPACE
@@ -26,30 +24,27 @@ class Ui_MainWindow
 {
 public:
     QWidget *centralwidget;
-    QGraphicsView *graphicsView;
-    QMenuBar *menubar;
-    QStatusBar *statusbar;
+    QPushButton *start_game_button;
+    QPushButton *quite_game_button;
 
     void setupUi(QMainWindow *MainWindow)
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QStringLiteral("MainWindow"));
-        MainWindow->resize(800, 600);
+        MainWindow->resize(570, 600);
         centralwidget = new QWidget(MainWindow);
         centralwidget->setObjectName(QStringLiteral("centralwidget"));
-        graphicsView = new QGraphicsView(centralwidget);
-        graphicsView->setObjectName(QStringLiteral("graphicsView"));
-        graphicsView->setGeometry(QRect(70, 80, 301, 211));
+        start_game_button = new QPushButton(centralwidget);
+        start_game_button->setObjectName(QStringLiteral("start_game_button"));
+        start_game_button->setGeometry(QRect(160, 176, 241, 71));
+        quite_game_button = new QPushButton(centralwidget);
+        quite_game_button->setObjectName(QStringLiteral("quite_game_button"));
+        quite_game_button->setGeometry(QRect(160, 290, 241, 71));
         MainWindow->setCentralWidget(centralwidget);
-        menubar = new QMenuBar(MainWindow);
-        menubar->setObjectName(QStringLiteral("menubar"));
-        menubar->setGeometry(QRect(0, 0, 800, 25));
-        MainWindow->setMenuBar(menubar);
-        statusbar = new QStatusBar(MainWindow);
-        statusbar->setObjectName(QStringLiteral("statusbar"));
-        MainWindow->setStatusBar(statusbar);
 
         retranslateUi(MainWindow);
+        QObject::connect(quite_game_button, SIGNAL(clicked()), MainWindow, SLOT(close()));
+        QObject::connect(start_game_button, SIGNAL(clicked()), MainWindow, SLOT(hide()));
 
         QMetaObject::connectSlotsByName(MainWindow);
     } // setupUi
@@ -57,6 +52,8 @@ public:
     void retranslateUi(QMainWindow *MainWindow)
     {
         MainWindow->setWindowTitle(QApplication::translate("MainWindow", "MainWindow", 0));
+        start_game_button->setText(QApplication::translate("MainWindow", "Play Game", 0));
+        quite_game_button->setText(QApplication::translate("MainWindow", "Quit", 0));
     } // retranslateUi
 
 };

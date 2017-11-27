@@ -2,6 +2,7 @@
 #define STARSYSTEMITEM
 
 #include <QGraphicsEllipseItem>
+#include <QPainter>
 
 class StarSystemItem: public QGraphicsEllipseItem{
 

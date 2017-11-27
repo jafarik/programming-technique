@@ -24,11 +24,14 @@ public:
      void reduceCredits(unsigned amount);
      int getCreditBalance() const;
 
+     bool checkInvariant() const;
+
 private:
      unsigned int saved_ships_;
      unsigned int lost_ships_;
      unsigned int points_;
      int credits_;
+     int Max_Loan_Allowance_;
 };
 }//Student
 

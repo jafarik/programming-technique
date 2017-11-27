@@ -15,6 +15,7 @@
 #include <QtWidgets/QButtonGroup>
 #include <QtWidgets/QDialog>
 #include <QtWidgets/QGraphicsView>
+#include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QHeaderView>
 
 QT_BEGIN_NAMESPACE
@@ -22,21 +23,27 @@ QT_BEGIN_NAMESPACE
 class Ui_Dialog
 {
 public:
+    QHBoxLayout *horizontalLayout;
     QGraphicsView *graphicsView;
 
     void setupUi(QDialog *Dialog)
     {
         if (Dialog->objectName().isEmpty())
             Dialog->setObjectName(QStringLiteral("Dialog"));
-        Dialog->resize(500, 500);
+        Dialog->resize(274, 210);
+        horizontalLayout = new QHBoxLayout(Dialog);
+        horizontalLayout->setObjectName(QStringLiteral("horizontalLayout"));
         graphicsView = new QGraphicsView(Dialog);
         graphicsView->setObjectName(QStringLiteral("graphicsView"));
-        graphicsView->setGeometry(QRect(10, 10, 500, 500));
         QSizePolicy sizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
         sizePolicy.setHorizontalStretch(1);
         sizePolicy.setVerticalStretch(1);
         sizePolicy.setHeightForWidth(graphicsView->sizePolicy().hasHeightForWidth());
         graphicsView->setSizePolicy(sizePolicy);
+        graphicsView->setStyleSheet(QStringLiteral("background-color:black"));
+
+        horizontalLayout->addWidget(graphicsView);
+
 
         retranslateUi(Dialog);
 

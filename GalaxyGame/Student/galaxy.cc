@@ -1,4 +1,5 @@
 #include "galaxy.hh"
+#include <QDebug>
 
 
 
@@ -63,11 +64,16 @@ Common::StarSystem::StarSystemVector Student::Galaxy::getSystemsInRange(std::sha
 
 std::shared_ptr<Common::StarSystem> Student::Galaxy::getRandomSystem()
 {
-    srand(time(NULL));
+    //srand(time(NULL));
     auto num_stars = galaxy_star.size();
-    auto rand_num = rand()%num_stars;
 
-    return galaxy_star[rand_num];
+    auto rand_num = Common::randomMinMax(0,num_stars-1);
+
+//Common::utilityInit();
+//    qDebug()<<"random system: rand = "<<rand_num;
+
+
+    return galaxy_star.at(Common::randomMinMax(0,num_stars-1));//[rand_num];
 }
 
 

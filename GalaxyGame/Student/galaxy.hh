@@ -7,6 +7,8 @@
 #include <algorithm>
 #include <stdlib.h>
 #include <time.h>
+#include "utility.hh"
+
 namespace Student {
 
 class Galaxy : public Common::IGalaxy, public std::enable_shared_from_this<Galaxy>

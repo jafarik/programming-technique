@@ -3,6 +3,7 @@
 
 
 #include <QGraphicsRectItem>
+#include <QPainter>
 
 class CargoShipItem: public QGraphicsRectItem{
 

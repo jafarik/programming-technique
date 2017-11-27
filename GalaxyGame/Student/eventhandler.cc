@@ -14,7 +14,6 @@ Student::EventHandler::~EventHandler()
 void Student::EventHandler::shipSpawned(std::shared_ptr<Common::Ship> ship)
 {
     auto p = (ship)->getLocation()->getCoordinates();
-    qDebug()<<" X = "<<p.x<<" Y = "<<p.y;
     h->drawNewShip(p);
 }
 
@@ -32,7 +31,7 @@ void Student::EventHandler::shipRelocated(std::shared_ptr<Common::Ship> ship, st
 
 void Student::EventHandler::shipMoved(std::shared_ptr<Common::Ship> ship, Common::Point origin, Common::Point target)
 {
-    //emit shipChangedPos(ship, origin, target);
+    h->moveCargoShips();
 
 }
 

@@ -71,3 +71,6 @@ FORMS += \
     mainwindow.ui \
     dialog.ui \
     dialogtwo.ui
+
+RESOURCES += \
+    resource.qrc

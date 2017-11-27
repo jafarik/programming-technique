@@ -7,7 +7,8 @@
 #include "initialize.hh"
 #include "igamerunner.hh"
 #include "utility.hh"
-#include "eventhandler.hh"
+#include "dialog.h"
+
 #include <memory>
 #include <time.h>
 
@@ -21,13 +22,18 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit MainWindow(/*std::shared_ptr<Common::IEventHandler> handler,*/
-                        /*std::shared_ptr<Student::Galaxy> galaxy,*/
-                        QWidget *parent = 0);
+    explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
+    void setDialog(Dialog *h);
+
+private slots:
+    void on_quite_game_button_clicked();
+
+    void on_start_game_button_clicked();
 
 private:
     Ui::MainWindow *ui;
+    Dialog *h;
 };
 
 #endif // MAINWINDOW_H
