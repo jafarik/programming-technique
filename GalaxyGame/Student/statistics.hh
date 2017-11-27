@@ -8,6 +8,7 @@ class Statistics : public Common::IStatistics
 {
 public:
     Statistics();
+    ~Statistics();
 
      void addSavedShip();
      unsigned getSavedShips() const;
@@ -24,7 +25,10 @@ public:
      int getCreditBalance() const;
 
 private:
-
+     unsigned int saved_ships_;
+     unsigned int lost_ships_;
+     unsigned int points_;
+     int credits_;
 };
 }//Student
 

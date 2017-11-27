@@ -4,13 +4,22 @@
 
 #include "ieventhandler.hh"
 #include "point.hh"
+#include "galaxy.hh"
+#include <QObject>
+#include "dialog.h"
+#include "mainwindow.h"
+#include "dialogtwo.h"
+#include <QDebug>
+
 
 namespace Student {
 class EventHandler: public Common::IEventHandler
 {
+   //Q_OBJECT
+
 public:
-    EventHandler();
-    ~EventHandler();
+     EventHandler();
+     ~EventHandler();
     void shipSpawned(std::shared_ptr<Common::Ship> ship);
     void shipRemoved(std::shared_ptr<Common::Ship> ship);
     void shipRelocated(std::shared_ptr<Common::Ship> ship,
@@ -22,6 +31,12 @@ public:
     void distressOn(std::shared_ptr<Common::Ship> ship);
     void distressOff(std::shared_ptr<Common::Ship> ship);
     void shipAbandoned(std::shared_ptr<Common::Ship> ship);
+    void setDialog(Dialog *h);
+    Dialog* getDialog();
+
+private:
+    Dialog *h;
+
 };
 }
 

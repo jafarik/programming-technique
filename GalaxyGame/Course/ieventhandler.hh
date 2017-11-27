@@ -4,6 +4,7 @@
 #include <string>
 #include <memory>
 
+
 #ifdef English_dox
 /**
  * @file
@@ -124,6 +125,17 @@ public:
      */
 #endif
     virtual void shipAbandoned(std::shared_ptr<Ship> ship) = 0;
+
+#ifdef English_dox
+    /**
+     * @brief connect the dialog ui with handler obj
+     * @param Dialog dialog, to which eventhandler will be connect
+     * @post Exception guarantee: nothrow
+     */
+#endif
+
+
+    //virtual void setDialog(gameUI::Dialog *dialog);
 };
 
 }

@@ -18,13 +18,21 @@ SOURCES += \
     galaxy.cc \
     eventhandler.cc \
     statistics.cc \
-    mainwindow.cpp
+    mainwindow.cpp \
+    starsystemitem.cpp \
+    dialog.cpp \
+    cargoshipitem.cpp \
+    dialogtwo.cpp
 
 HEADERS  += \
     galaxy.hh \
     eventhandler.hh \
     statistics.hh \
-    mainwindow.h
+    mainwindow.h \
+    starsystemitem.h \
+    dialog.h \
+    cargoshipitem.h \
+    dialogtwo.h
 
 INCLUDEPATH += $$PWD/../Course
 DEPENDPATH += $$PWD/../Course
@@ -60,4 +68,6 @@ QMAKE_EXTRA_TARGETS += copyfiles
 POST_TARGETDEPS += copyfiles
 
 FORMS += \
-    mainwindow.ui
+    mainwindow.ui \
+    dialog.ui \
+    dialogtwo.ui

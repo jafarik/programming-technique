@@ -1,4 +1,5 @@
 #include "eventhandler.hh"
+#include "galaxy.hh"
 
 Student::EventHandler::EventHandler()
 {
@@ -12,21 +13,26 @@ Student::EventHandler::~EventHandler()
 
 void Student::EventHandler::shipSpawned(std::shared_ptr<Common::Ship> ship)
 {
-
+    auto p = (ship)->getLocation()->getCoordinates();
+    qDebug()<<" X = "<<p.x<<" Y = "<<p.y;
+    h->drawNewShip(p);
 }
 
 void Student::EventHandler::shipRemoved(std::shared_ptr<Common::Ship> ship)
 {
+    //emit shipDeleted(ship);
 
 }
 
 void Student::EventHandler::shipRelocated(std::shared_ptr<Common::Ship> ship, std::shared_ptr<Common::StarSystem> starSystem)
 {
+    //emit shipChangedStar(ship, starSystem);
 
 }
 
 void Student::EventHandler::shipMoved(std::shared_ptr<Common::Ship> ship, Common::Point origin, Common::Point target)
 {
+    //emit shipChangedPos(ship, origin, target);
 
 }
 
@@ -48,4 +54,18 @@ void Student::EventHandler::distressOff(std::shared_ptr<Common::Ship> ship)
 void Student::EventHandler::shipAbandoned(std::shared_ptr<Common::Ship> ship)
 {
 
+
 }
+
+void Student::EventHandler::setDialog(Dialog *h)
+{
+    this->h = h;
+
+}
+
+Dialog *Student::EventHandler::getDialog()
+{
+    return this->h;
+}
+
+

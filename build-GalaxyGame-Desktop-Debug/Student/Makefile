@@ -52,13 +52,25 @@ SOURCES       = ../../GalaxyGame/Student/main.cc \
 		../../GalaxyGame/Student/galaxy.cc \
 		../../GalaxyGame/Student/eventhandler.cc \
 		../../GalaxyGame/Student/statistics.cc \
-		../../GalaxyGame/Student/mainwindow.cpp moc_mainwindow.cpp
+		../../GalaxyGame/Student/mainwindow.cpp \
+		../../GalaxyGame/Student/starsystemitem.cpp \
+		../../GalaxyGame/Student/dialog.cpp \
+		../../GalaxyGame/Student/cargoshipitem.cpp \
+		../../GalaxyGame/Student/dialogtwo.cpp moc_mainwindow.cpp \
+		moc_dialog.cpp \
+		moc_dialogtwo.cpp
 OBJECTS       = main.o \
 		galaxy.o \
 		eventhandler.o \
 		statistics.o \
 		mainwindow.o \
-		moc_mainwindow.o
+		starsystemitem.o \
+		dialog.o \
+		cargoshipitem.o \
+		dialogtwo.o \
+		moc_mainwindow.o \
+		moc_dialog.o \
+		moc_dialogtwo.o
 DIST          = /home/kianoush/anaconda2/mkspecs/features/spec_pre.prf \
 		/home/kianoush/anaconda2/mkspecs/common/unix.conf \
 		/home/kianoush/anaconda2/mkspecs/common/linux.conf \
@@ -164,11 +176,19 @@ DIST          = /home/kianoush/anaconda2/mkspecs/features/spec_pre.prf \
 		../../GalaxyGame/Student/Student.pro ../../GalaxyGame/Student/galaxy.hh \
 		../../GalaxyGame/Student/eventhandler.hh \
 		../../GalaxyGame/Student/statistics.hh \
-		../../GalaxyGame/Student/mainwindow.h ../../GalaxyGame/Student/main.cc \
+		../../GalaxyGame/Student/mainwindow.h \
+		../../GalaxyGame/Student/starsystemitem.h \
+		../../GalaxyGame/Student/dialog.h \
+		../../GalaxyGame/Student/cargoshipitem.h \
+		../../GalaxyGame/Student/dialogtwo.h ../../GalaxyGame/Student/main.cc \
 		../../GalaxyGame/Student/galaxy.cc \
 		../../GalaxyGame/Student/eventhandler.cc \
 		../../GalaxyGame/Student/statistics.cc \
-		../../GalaxyGame/Student/mainwindow.cpp
+		../../GalaxyGame/Student/mainwindow.cpp \
+		../../GalaxyGame/Student/starsystemitem.cpp \
+		../../GalaxyGame/Student/dialog.cpp \
+		../../GalaxyGame/Student/cargoshipitem.cpp \
+		../../GalaxyGame/Student/dialogtwo.cpp
 QMAKE_TARGET  = GalaxyGame
 DESTDIR       = debug/
 TARGET        = debug/GalaxyGame
@@ -177,7 +197,7 @@ TARGET        = debug/GalaxyGame
 first: all
 ####### Build rules
 
-$(TARGET): ui_mainwindow.h $(OBJECTS)  copyfiles
+$(TARGET): ui_mainwindow.h ui_dialog.h ui_dialogtwo.h $(OBJECTS)  copyfiles
 	@test -d debug/ || mkdir -p debug/
 	$(LINK) $(LFLAGS) -o $(TARGET) $(OBJECTS) $(OBJCOMP) $(LIBS)
 
@@ -408,9 +428,9 @@ dist: distdir FORCE
 distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
-	$(COPY_FILE) --parents ../../GalaxyGame/Student/galaxy.hh ../../GalaxyGame/Student/eventhandler.hh ../../GalaxyGame/Student/statistics.hh ../../GalaxyGame/Student/mainwindow.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../../GalaxyGame/Student/main.cc ../../GalaxyGame/Student/galaxy.cc ../../GalaxyGame/Student/eventhandler.cc ../../GalaxyGame/Student/statistics.cc ../../GalaxyGame/Student/mainwindow.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../../GalaxyGame/Student/mainwindow.ui $(DISTDIR)/
+	$(COPY_FILE) --parents ../../GalaxyGame/Student/galaxy.hh ../../GalaxyGame/Student/eventhandler.hh ../../GalaxyGame/Student/statistics.hh ../../GalaxyGame/Student/mainwindow.h ../../GalaxyGame/Student/starsystemitem.h ../../GalaxyGame/Student/dialog.h ../../GalaxyGame/Student/cargoshipitem.h ../../GalaxyGame/Student/dialogtwo.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../../GalaxyGame/Student/main.cc ../../GalaxyGame/Student/galaxy.cc ../../GalaxyGame/Student/eventhandler.cc ../../GalaxyGame/Student/statistics.cc ../../GalaxyGame/Student/mainwindow.cpp ../../GalaxyGame/Student/starsystemitem.cpp ../../GalaxyGame/Student/dialog.cpp ../../GalaxyGame/Student/cargoshipitem.cpp ../../GalaxyGame/Student/dialogtwo.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../../GalaxyGame/Student/mainwindow.ui ../../GalaxyGame/Student/dialog.ui ../../GalaxyGame/Student/dialogtwo.ui $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -438,19 +458,71 @@ benchmark: first
 
 compiler_rcc_make_all:
 compiler_rcc_clean:
-compiler_moc_header_make_all: moc_mainwindow.cpp
+compiler_moc_header_make_all: moc_mainwindow.cpp moc_dialog.cpp moc_dialogtwo.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_mainwindow.cpp
-moc_mainwindow.cpp: ../../GalaxyGame/Student/mainwindow.h
+	-$(DEL_FILE) moc_mainwindow.cpp moc_dialog.cpp moc_dialogtwo.cpp
+moc_mainwindow.cpp: ../../GalaxyGame/Student/galaxy.hh \
+		../../GalaxyGame/Course/igalaxy.hh \
+		../../GalaxyGame/Course/ship.hh \
+		../../GalaxyGame/Course/shipengine.hh \
+		../../GalaxyGame/Course/starsystem.hh \
+		../../GalaxyGame/Course/point.hh \
+		../../GalaxyGame/Course/utility.hh \
+		../../GalaxyGame/Course/ieventhandler.hh \
+		../../GalaxyGame/Course/initialize.hh \
+		../../GalaxyGame/Course/igamerunner.hh \
+		../../GalaxyGame/Student/eventhandler.hh \
+		../../GalaxyGame/Student/dialog.h \
+		../../GalaxyGame/Student/starsystemitem.h \
+		../../GalaxyGame/Student/cargoshipitem.h \
+		../../GalaxyGame/Student/mainwindow.h \
+		../../GalaxyGame/Student/dialogtwo.h \
+		../../GalaxyGame/Student/mainwindow.h
 	/home/kianoush/anaconda2/bin/moc $(DEFINES) -I/home/kianoush/anaconda2/mkspecs/linux-g++ -I/home/kianoush/TUT-term3/Programming_Techniques/project_work/template_project/GalaxyGame/Student -I/home/kianoush/TUT-term3/Programming_Techniques/project_work/template_project/GalaxyGame/Course -I/home/kianoush/anaconda2/include/qt -I/home/kianoush/anaconda2/include/qt/QtWidgets -I/home/kianoush/anaconda2/include/qt/QtGui -I/home/kianoush/anaconda2/include/qt/QtCore -I. -I/home/kianoush/anaconda2/lib/gcc/x86_64-unknown-linux-gnu/4.8.5/include -I/home/kianoush/anaconda2/lib/gcc/x86_64-unknown-linux-gnu/4.8.5/include-fixed -I/home/kianoush/anaconda2/gcc/include/c++ -I/home/kianoush/anaconda2/gcc/include/c++/x86_64-unknown-linux-gnu -I/home/kianoush/anaconda2/gcc/include/c++/backward -I/home/kianoush/anaconda2/include -I/usr/include ../../GalaxyGame/Student/mainwindow.h -o moc_mainwindow.cpp
+
+moc_dialog.cpp: ../../GalaxyGame/Student/starsystemitem.h \
+		../../GalaxyGame/Student/cargoshipitem.h \
+		../../GalaxyGame/Course/initialize.hh \
+		../../GalaxyGame/Course/igalaxy.hh \
+		../../GalaxyGame/Course/ship.hh \
+		../../GalaxyGame/Course/shipengine.hh \
+		../../GalaxyGame/Course/starsystem.hh \
+		../../GalaxyGame/Course/point.hh \
+		../../GalaxyGame/Course/utility.hh \
+		../../GalaxyGame/Course/ieventhandler.hh \
+		../../GalaxyGame/Course/igamerunner.hh \
+		../../GalaxyGame/Student/galaxy.hh \
+		../../GalaxyGame/Student/dialog.h
+	/home/kianoush/anaconda2/bin/moc $(DEFINES) -I/home/kianoush/anaconda2/mkspecs/linux-g++ -I/home/kianoush/TUT-term3/Programming_Techniques/project_work/template_project/GalaxyGame/Student -I/home/kianoush/TUT-term3/Programming_Techniques/project_work/template_project/GalaxyGame/Course -I/home/kianoush/anaconda2/include/qt -I/home/kianoush/anaconda2/include/qt/QtWidgets -I/home/kianoush/anaconda2/include/qt/QtGui -I/home/kianoush/anaconda2/include/qt/QtCore -I. -I/home/kianoush/anaconda2/lib/gcc/x86_64-unknown-linux-gnu/4.8.5/include -I/home/kianoush/anaconda2/lib/gcc/x86_64-unknown-linux-gnu/4.8.5/include-fixed -I/home/kianoush/anaconda2/gcc/include/c++ -I/home/kianoush/anaconda2/gcc/include/c++/x86_64-unknown-linux-gnu -I/home/kianoush/anaconda2/gcc/include/c++/backward -I/home/kianoush/anaconda2/include -I/usr/include ../../GalaxyGame/Student/dialog.h -o moc_dialog.cpp
+
+moc_dialogtwo.cpp: ../../GalaxyGame/Student/starsystemitem.h \
+		../../GalaxyGame/Student/cargoshipitem.h \
+		../../GalaxyGame/Student/galaxy.hh \
+		../../GalaxyGame/Course/igalaxy.hh \
+		../../GalaxyGame/Course/ship.hh \
+		../../GalaxyGame/Course/shipengine.hh \
+		../../GalaxyGame/Course/starsystem.hh \
+		../../GalaxyGame/Course/point.hh \
+		../../GalaxyGame/Course/utility.hh \
+		../../GalaxyGame/Course/ieventhandler.hh \
+		../../GalaxyGame/Course/initialize.hh \
+		../../GalaxyGame/Course/igamerunner.hh \
+		../../GalaxyGame/Student/dialogtwo.h
+	/home/kianoush/anaconda2/bin/moc $(DEFINES) -I/home/kianoush/anaconda2/mkspecs/linux-g++ -I/home/kianoush/TUT-term3/Programming_Techniques/project_work/template_project/GalaxyGame/Student -I/home/kianoush/TUT-term3/Programming_Techniques/project_work/template_project/GalaxyGame/Course -I/home/kianoush/anaconda2/include/qt -I/home/kianoush/anaconda2/include/qt/QtWidgets -I/home/kianoush/anaconda2/include/qt/QtGui -I/home/kianoush/anaconda2/include/qt/QtCore -I. -I/home/kianoush/anaconda2/lib/gcc/x86_64-unknown-linux-gnu/4.8.5/include -I/home/kianoush/anaconda2/lib/gcc/x86_64-unknown-linux-gnu/4.8.5/include-fixed -I/home/kianoush/anaconda2/gcc/include/c++ -I/home/kianoush/anaconda2/gcc/include/c++/x86_64-unknown-linux-gnu -I/home/kianoush/anaconda2/gcc/include/c++/backward -I/home/kianoush/anaconda2/include -I/usr/include ../../GalaxyGame/Student/dialogtwo.h -o moc_dialogtwo.cpp
 
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
-compiler_uic_make_all: ui_mainwindow.h
+compiler_uic_make_all: ui_mainwindow.h ui_dialog.h ui_dialogtwo.h
 compiler_uic_clean:
-	-$(DEL_FILE) ui_mainwindow.h
+	-$(DEL_FILE) ui_mainwindow.h ui_dialog.h ui_dialogtwo.h
 ui_mainwindow.h: ../../GalaxyGame/Student/mainwindow.ui
 	/home/kianoush/anaconda2/bin/uic ../../GalaxyGame/Student/mainwindow.ui -o ui_mainwindow.h
+
+ui_dialog.h: ../../GalaxyGame/Student/dialog.ui
+	/home/kianoush/anaconda2/bin/uic ../../GalaxyGame/Student/dialog.ui -o ui_dialog.h
+
+ui_dialogtwo.h: ../../GalaxyGame/Student/dialogtwo.ui
+	/home/kianoush/anaconda2/bin/uic ../../GalaxyGame/Student/dialogtwo.ui -o ui_dialogtwo.h
 
 compiler_yacc_decl_make_all:
 compiler_yacc_decl_clean:
@@ -472,7 +544,12 @@ main.o: ../../GalaxyGame/Student/main.cc ../../GalaxyGame/Student/galaxy.hh \
 		../../GalaxyGame/Course/ieventhandler.hh \
 		../../GalaxyGame/Course/initialize.hh \
 		../../GalaxyGame/Course/igamerunner.hh \
-		../../GalaxyGame/Student/eventhandler.hh
+		../../GalaxyGame/Student/eventhandler.hh \
+		../../GalaxyGame/Student/dialog.h \
+		../../GalaxyGame/Student/starsystemitem.h \
+		../../GalaxyGame/Student/cargoshipitem.h \
+		../../GalaxyGame/Student/mainwindow.h \
+		../../GalaxyGame/Student/dialogtwo.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../../GalaxyGame/Student/main.cc
 
 galaxy.o: ../../GalaxyGame/Student/galaxy.cc ../../GalaxyGame/Student/galaxy.hh \
@@ -488,7 +565,19 @@ galaxy.o: ../../GalaxyGame/Student/galaxy.cc ../../GalaxyGame/Student/galaxy.hh 
 eventhandler.o: ../../GalaxyGame/Student/eventhandler.cc ../../GalaxyGame/Student/eventhandler.hh \
 		../../GalaxyGame/Course/ieventhandler.hh \
 		../../GalaxyGame/Course/point.hh \
-		../../GalaxyGame/Course/utility.hh
+		../../GalaxyGame/Course/utility.hh \
+		../../GalaxyGame/Student/galaxy.hh \
+		../../GalaxyGame/Course/igalaxy.hh \
+		../../GalaxyGame/Course/ship.hh \
+		../../GalaxyGame/Course/shipengine.hh \
+		../../GalaxyGame/Course/starsystem.hh \
+		../../GalaxyGame/Student/dialog.h \
+		../../GalaxyGame/Student/starsystemitem.h \
+		../../GalaxyGame/Student/cargoshipitem.h \
+		../../GalaxyGame/Course/initialize.hh \
+		../../GalaxyGame/Course/igamerunner.hh \
+		../../GalaxyGame/Student/mainwindow.h \
+		../../GalaxyGame/Student/dialogtwo.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o eventhandler.o ../../GalaxyGame/Student/eventhandler.cc
 
 statistics.o: ../../GalaxyGame/Student/statistics.cc ../../GalaxyGame/Student/statistics.hh \
@@ -496,11 +585,70 @@ statistics.o: ../../GalaxyGame/Student/statistics.cc ../../GalaxyGame/Student/st
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o statistics.o ../../GalaxyGame/Student/statistics.cc
 
 mainwindow.o: ../../GalaxyGame/Student/mainwindow.cpp ../../GalaxyGame/Student/mainwindow.h \
+		../../GalaxyGame/Student/galaxy.hh \
+		../../GalaxyGame/Course/igalaxy.hh \
+		../../GalaxyGame/Course/ship.hh \
+		../../GalaxyGame/Course/shipengine.hh \
+		../../GalaxyGame/Course/starsystem.hh \
+		../../GalaxyGame/Course/point.hh \
+		../../GalaxyGame/Course/utility.hh \
+		../../GalaxyGame/Course/ieventhandler.hh \
+		../../GalaxyGame/Course/initialize.hh \
+		../../GalaxyGame/Course/igamerunner.hh \
+		../../GalaxyGame/Student/eventhandler.hh \
+		../../GalaxyGame/Student/dialog.h \
+		../../GalaxyGame/Student/starsystemitem.h \
+		../../GalaxyGame/Student/cargoshipitem.h \
+		../../GalaxyGame/Student/dialogtwo.h \
 		ui_mainwindow.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o ../../GalaxyGame/Student/mainwindow.cpp
 
+starsystemitem.o: ../../GalaxyGame/Student/starsystemitem.cpp ../../GalaxyGame/Student/starsystemitem.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o starsystemitem.o ../../GalaxyGame/Student/starsystemitem.cpp
+
+dialog.o: ../../GalaxyGame/Student/dialog.cpp ../../GalaxyGame/Student/dialog.h \
+		../../GalaxyGame/Student/starsystemitem.h \
+		../../GalaxyGame/Student/cargoshipitem.h \
+		../../GalaxyGame/Course/initialize.hh \
+		../../GalaxyGame/Course/igalaxy.hh \
+		../../GalaxyGame/Course/ship.hh \
+		../../GalaxyGame/Course/shipengine.hh \
+		../../GalaxyGame/Course/starsystem.hh \
+		../../GalaxyGame/Course/point.hh \
+		../../GalaxyGame/Course/utility.hh \
+		../../GalaxyGame/Course/ieventhandler.hh \
+		../../GalaxyGame/Course/igamerunner.hh \
+		../../GalaxyGame/Student/galaxy.hh \
+		ui_dialog.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o dialog.o ../../GalaxyGame/Student/dialog.cpp
+
+cargoshipitem.o: ../../GalaxyGame/Student/cargoshipitem.cpp ../../GalaxyGame/Student/cargoshipitem.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o cargoshipitem.o ../../GalaxyGame/Student/cargoshipitem.cpp
+
+dialogtwo.o: ../../GalaxyGame/Student/dialogtwo.cpp ../../GalaxyGame/Student/dialogtwo.h \
+		../../GalaxyGame/Student/starsystemitem.h \
+		../../GalaxyGame/Student/cargoshipitem.h \
+		../../GalaxyGame/Student/galaxy.hh \
+		../../GalaxyGame/Course/igalaxy.hh \
+		../../GalaxyGame/Course/ship.hh \
+		../../GalaxyGame/Course/shipengine.hh \
+		../../GalaxyGame/Course/starsystem.hh \
+		../../GalaxyGame/Course/point.hh \
+		../../GalaxyGame/Course/utility.hh \
+		../../GalaxyGame/Course/ieventhandler.hh \
+		../../GalaxyGame/Course/initialize.hh \
+		../../GalaxyGame/Course/igamerunner.hh \
+		ui_dialogtwo.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o dialogtwo.o ../../GalaxyGame/Student/dialogtwo.cpp
+
 moc_mainwindow.o: moc_mainwindow.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_mainwindow.o moc_mainwindow.cpp
+
+moc_dialog.o: moc_dialog.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_dialog.o moc_dialog.cpp
+
+moc_dialogtwo.o: moc_dialogtwo.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_dialogtwo.o moc_dialogtwo.cpp
 
 ####### Install
 

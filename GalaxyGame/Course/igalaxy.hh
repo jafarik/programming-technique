@@ -36,6 +36,8 @@ public:
      */
 #endif
     typedef std::vector<std::shared_ptr<Common::Ship> > ShipVector;
+    typedef std::vector<std::shared_ptr<Common::StarSystem> > StartVector;
+
 
 #ifdef English_dox
     /**
